@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<zabbix_export>
+    <version>5.4</version>
+    <date>2022-04-26T17:14:42Z</date>
+    <groups>
+        <group>
+            <uuid>78244ad992bd48a9a700717e0242c608</uuid>
+            <name>Mega NZ</name>
+        </group>
+    </groups>
+    <templates>
+        <template>
+            <uuid>dc694d1671ce4f2189d8ff218bbf4efd</uuid>
+            <template>SC MEGANZ DF</template>
+            <name>SC MEGANZ DF</name>
+            <description>Monitoramento do consumo de &quot;disco&quot; do mega nz cloud como o megatools</description>
+            <groups>
+                <group>
+                    <name>Mega NZ</name>
+                </group>
+            </groups>
+            <items>
+                <item>
+                    <uuid>31c7ca550f894a8aaa3bafb229e65963</uuid>
+                    <name>Free</name>
+                    <type>DEPENDENT</type>
+                    <key>free</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>60d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$..free.first()</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <parameters>
+                                <parameter>1800</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>megadf[{$MEGA_EMAIL}, {$MEGA_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>sc meganz</tag>
+                            <value>free</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>27a18eecf0574bbab23840effe1e7935</uuid>
+                    <name>megadf</name>
+                    <type>EXTERNAL</type>
+                    <key>megadf[{$MEGA_EMAIL}, {$MEGA_PASS}]</key>
+                    <delay>3m</delay>
+                    <history>0</history>
+                    <trends>0</trends>
+                    <value_type>CHAR</value_type>
+                </item>
+                <item>
+                    <uuid>9d184e693ef74eaf91e4ac9958c3c4d5</uuid>
+                    <name>Percent</name>
+                    <type>DEPENDENT</type>
+                    <key>percent</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>60d</trends>
+                    <value_type>FLOAT</value_type>
+                    <units>%</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$..percent.first()</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <parameters>
+                                <parameter>1800</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>megadf[{$MEGA_EMAIL}, {$MEGA_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>sc meganz</tag>
+                            <value>percent</value>
+                        </tag>
+                    </tags>
+                    <triggers>
+                        <trigger>
+                            <uuid>6d26c09d7e4a47edbd749d675a1a6a49</uuid>
+                            <expression>last(/SC MEGANZ DF/percent)&gt;80</expression>
+                            <name>Disco do ultrapassou 80% de consumo</name>
+                            <priority>AVERAGE</priority>
+                        </trigger>
+                        <trigger>
+                            <uuid>b190cac9b55746f08e24703efc66c3bb</uuid>
+                            <expression>last(/SC MEGANZ DF/percent)&gt;95</expression>
+                            <name>Disco do ultrapassou 95% de consumo</name>
+                            <priority>HIGH</priority>
+                        </trigger>
+                    </triggers>
+                </item>
+                <item>
+                    <uuid>27f9c3fe41294feeb9f9ace6fef91e8b</uuid>
+                    <name>Total</name>
+                    <type>DEPENDENT</type>
+                    <key>total</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>60d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$..total.first()</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <parameters>
+                                <parameter>1800</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>megadf[{$MEGA_EMAIL}, {$MEGA_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>sc meganz</tag>
+                            <value>total</value>
+                        </tag>
+                    </tags>
+                </item>
+                <item>
+                    <uuid>cfd069fdc3c4414c94c7db7192101bf2</uuid>
+                    <name>Used</name>
+                    <type>DEPENDENT</type>
+                    <key>used</key>
+                    <delay>0</delay>
+                    <history>30d</history>
+                    <trends>60d</trends>
+                    <units>B</units>
+                    <preprocessing>
+                        <step>
+                            <type>JSONPATH</type>
+                            <parameters>
+                                <parameter>$..used.first()</parameter>
+                            </parameters>
+                        </step>
+                        <step>
+                            <type>DISCARD_UNCHANGED_HEARTBEAT</type>
+                            <parameters>
+                                <parameter>1800</parameter>
+                            </parameters>
+                        </step>
+                    </preprocessing>
+                    <master_item>
+                        <key>megadf[{$MEGA_EMAIL}, {$MEGA_PASS}]</key>
+                    </master_item>
+                    <tags>
+                        <tag>
+                            <tag>sc meganz</tag>
+                            <value>used</value>
+                        </tag>
+                    </tags>
+                </item>
+            </items>
+            <macros>
+                <macro>
+                    <macro>{$MEGA_EMAIL}</macro>
+                    <value>noc@suaempresa.com</value>
+                    <description>email</description>
+                </macro>
+                <macro>
+                    <macro>{$MEGA_PASS}</macro>
+                    <value>SuperSenh@DoMeg@Nz</value>
+                    <description>senha / password</description>
+                </macro>
+            </macros>
+        </template>
+    </templates>
+</zabbix_export>
